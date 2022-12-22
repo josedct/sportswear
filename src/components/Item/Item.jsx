@@ -23,7 +23,7 @@ const Item = ({id="0",title="Titulo de producto",precio=1999.99,url=ProductDefIm
                 <p className="card-text">{formatPrecio(precio)}</p>   
             </div>
             <div className="card-footer">
-              <Link to={`/detalle/${id}`} className="btn btn-warning">Ver detalles</Link>
+              <Link to={`/detalle/${id}`} className="btn btn-warning text-uppercase">Ver detalles</Link>
             </div>
         </div>
     </div>

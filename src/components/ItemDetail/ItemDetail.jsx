@@ -1,6 +1,7 @@
 import React from 'react'
 import ItemDetailGalery from '../ItemDetailGallery/ItemDetailGallery'
 import ItemDetailInfo from '../ItemDetailInfo/ItemDetailInfo'
+import ItemDetailOption from '../ItemDetailOption/ItemDetailOption'
 
 const ItemDetail = ({prodDetail} ) => {
     //Componente que muestra el detalle de algun producto en particular, se compone de otros dos componentes (ITEMDETAILGALERY e ITEMDETAILINFO) y tambien muestra una descripcion.
@@ -8,18 +9,21 @@ const ItemDetail = ({prodDetail} ) => {
         <div className='container'>
             <div className="row">
                 <div className="col-md-12 col-lg-6">
-                    < ItemDetailGalery ArrayGalery={prodDetail.IMG} IdProduct={prodDetail.MODELO}/>
+                    < ItemDetailGalery 
+                        ArrayGalery={prodDetail.IMG} 
+                        IdProduct={prodDetail.MODELO}
+                    />
                 </div>
-                <div className="col-md-12 col-lg-6">
+                <div className="col-md-12 col-lg-6 p-5">
                     <ItemDetailInfo 
                         nombre={prodDetail.NOMBRE}
                         categoria={prodDetail.CATEGORIA}
                         modelo={prodDetail.MODELO}
                         precio={prodDetail.PRECIO}
-                        stock={prodDetail.STOCK}
                         color={prodDetail.COLOR}
                         estilo={prodDetail.ESTILO}
                     />
+                    < ItemDetailOption product={prodDetail} stock={prodDetail.STOCK} />
                 </div>
             </div>
             <div className="row">

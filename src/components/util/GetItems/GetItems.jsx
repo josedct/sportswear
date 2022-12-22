@@ -1,10 +1,8 @@
-import DocProduct from '../../../assets/product.json'
+import {collection, getFirestore, query, where} from 'firebase/firestore'
 
 export const GetItems = (filter) => {
-    return new Promise((res)=>{
-        const filterProduct = (filter === 'all') ? DocProduct : DocProduct.filter(prod => prod.CATEGORIA === filter)
-        setTimeout(()=>{
-            res(filterProduct)            
-        }, 2000)
-    } )
+    const db = getFirestore()
+    const queryCollection = collection(db,'products')
+    const queryData = (filter === 'all') ? queryCollection : query(queryCollection, where('CATEGORIA','==', filter))
+    return queryData
 }

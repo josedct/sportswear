@@ -1,10 +1,7 @@
-import DocProduct from '../../../assets/product.json'
+import { doc, getFirestore } from 'firebase/firestore'
 
 export const GetItem = (id) => {
-  return new Promise((res) => {
-        const Product = DocProduct.find(prod => prod.MODELO === id)
-        setTimeout(()=>{
-            res(Product)
-        },2000)
-  })
+  const db = getFirestore()
+  const queryData = doc(db, 'products', id )
+  return queryData
 }

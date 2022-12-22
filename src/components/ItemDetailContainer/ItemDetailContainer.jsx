@@ -1,3 +1,4 @@
+import { getDoc } from "firebase/firestore"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import ItemDetail from "../ItemDetail/ItemDetail"
@@ -11,8 +12,9 @@ const ItemDetailContainer = () => {
     const {idProduct} = useParams()
 
     useEffect(()=>{
-        GetItem(idProduct)
-        .then(info => setProductDetail(info))
+        const queryData = GetItem(idProduct)
+        getDoc(queryData)
+        .then(info => setProductDetail( {...info.data()} ))
         .catch(err => console.log(err))
         .finally(()=> {
             window.scrollTo(0, 0)

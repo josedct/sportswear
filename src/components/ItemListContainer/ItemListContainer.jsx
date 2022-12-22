@@ -1,3 +1,4 @@
+import { getDocs } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import ItemList from "../ItemList/ItemList"
@@ -11,9 +12,11 @@ const ItemListContainer = () => {
   const {idCategory} = useParams()
   
   useEffect(()=>{
+    //.then(data =>data.docs.map(prod => ({...prod.data()})))
     setLoading(true)
-    GetItems((idCategory)? idCategory : 'all')
-    .then(info => setListProduct(info))
+    const queryData = GetItems((idCategory)? idCategory : 'all')
+    getDocs(queryData)
+    .then(info => setListProduct(info.docs.map(prod => ({...prod.data()}))))
     .catch(err => console.log(err))
     .finally(()=> {
       window.scrollTo(0, 0)
