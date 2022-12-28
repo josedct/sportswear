@@ -1,33 +1,38 @@
-import { getDoc } from "firebase/firestore"
-import { useEffect, useState } from "react"
-import { useParams } from "react-router-dom"
-import ItemDetail from "../ItemDetail/ItemDetail"
-import Loading from "../Loading/Loading"
-import { GetItem } from "../util/GetItem/GetItem"
+import { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import ItemDetail from '../ItemDetail/ItemDetail'
+import Loading from '../Loading/Loading'
+import { GetItem } from '../util/GetItem/GetItem'
 
 const ItemDetailContainer = () => {
     //Componente que obtiene los datos de algun producto especifico, se usa el componente LOADING para simular una carga y despues manda los datos obtenidos al componente ITEMDETAIL
-    const [productDetail,setProductDetail] = useState({})
-    const [loadingDetail,setLoadingDetail] = useState(true)
-    const {idProduct} = useParams()
+    const [product, setProduct] = useState({})
+    const [loadingProduct, setLoadingProduct] = useState(true)
+    const { idProduct } = useParams()
+    const navigate = useNavigate()
 
-    useEffect(()=>{
-        const queryData = GetItem(idProduct)
-        getDoc(queryData)
-        .then(info => setProductDetail( {...info.data()} ))
-        .catch(err => console.log(err))
-        .finally(()=> {
-            window.scrollTo(0, 0)
-            setLoadingDetail(false)})
-    },[])
+    useEffect(() => {
+        GetItem(idProduct)
+            .then(info => {
+                info.exists() ? 
+                    setProduct({ ...info.data() }) 
+                    :
+                    navigate(`/notfoundorerror/producto-no-existente`)
+            })
+            .catch(err => console.log(err))
+            .finally(() => {
+                window.scrollTo(0, 0)
+                setLoadingProduct(false)
+            })
+    }, [])
 
     return (
-        <section className="container d-flex justify-content-center">
+        <section className='container d-flex justify-content-center'>
             {
-                loadingDetail ? 
-                    < Loading />
-                :  
-                    < ItemDetail prodDetail={productDetail}/>
+                loadingProduct ?
+                    < Loading text={'Cargando datos del producto'} />
+                    :
+                    < ItemDetail product={product} />
             }
         </section>
     )
