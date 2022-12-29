@@ -1,4 +1,4 @@
-![image](https://reactcoder.consultoriainformaticaon.com/gifs/sportswear.gif)
+![image](public/assets/sportswear.gif)
 ##### E-commerce
 # _SportsWear_ 
 ##### React
